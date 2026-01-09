@@ -1,0 +1,27 @@
+healthcare-devops-project/
+│
+├── README.md
+│
+├── ansible/
+│   └── install_tools.yml
+│
+├── kubernetes/
+│   └── healthcare-deployment.yml
+│
+├── jenkins/
+│   └── Jenkinsfile
+│
+├── docker/
+│   └── Dockerfile
+│
+├── scripts/
+│   ├── k8s-master.sh
+│   └── k8s-nodes.sh
+│
+├── screenshots/
+│   ├── jenkins-pipeline.png
+│   ├── kubectl-get-nodes.png
+│   └── app-output.png
+│
+└── .gitignore
+# medicure-aws-docker

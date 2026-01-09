@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "yourdockerhubusername/medure:latest"
+        KUBE_CONFIG = "$HOME/.kube/config"
+    }
+
+    stages {
+
+        stage('Git Checkout') {
+            steps {
+                echo 'Cloning Medure GitHub repository'
+                git branch: 'main',
+                    url: 'https://github.com/yourusername/medure-devops-project.git'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                echo 'Building application using Maven'
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image'
+                sh 'docker build -t $DOCKER_IMAGE .'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                echo 'Pushing Docker image to DockerHub'
+                withCredentials([string(credentialsId: 'dockerhub-password', variable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                        echo $DOCKER_PASSWORD | docker login -u yourdockerhubusername --password-stdin
+                        docker push $DOCKER_IMAGE
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying Medure application to Kubernetes'
+                sh 'kubectl apply -f kubernetes/medure-deployment.yml'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Medure application deployed successfully 🚀'
+        }
+        failure {
+            echo 'Pipeline failed ❌ Check logs'
+        }
+    }
+}

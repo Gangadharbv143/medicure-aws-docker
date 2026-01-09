@@ -1,0 +1,37 @@
+
+## Project Overview
+End-to-end DevOps pipeline for a Healthcare application using
+Jenkins, Docker, Kubernetes, Ansible, and AWS EC2.
+
+## Tools & Technologies
+- AWS EC2
+- Jenkins
+- Docker & DockerHub
+- Kubernetes
+- Ansible
+- Git & GitHub
+- Linux (Ubuntu)
+
+## Architecture
+- Jenkins for CI/CD
+- Docker for containerization
+- Kubernetes for deployment
+- Ansible for tool installation
+
+## CI/CD Pipeline Stages
+1. Git Checkout
+2. Maven Build
+3. Docker Image Build
+4. Push Image to DockerHub
+5. Deploy to Kubernetes Cluster
+
+## How to Run
+1. Launch EC2 instances (Master & Worker)
+2. Run Ansible playbook to install tools
+3. Configure Jenkins pipeline
+4. Deploy application using Kubernetes
+5. Access application via NodePort
+
+## Output
+Application accessible at:
+http://<Master-Public-IP>:30085
